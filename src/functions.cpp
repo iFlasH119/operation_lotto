@@ -18,6 +18,16 @@ void print_numbers(vector<int> numbers){
     cout << '\n';
 }
 
+struct generate_random{
+    int range;
+    public:
+    generate_random(int r = 1) : range(r){}
+    double operator()() {
+        return (rand()/(int)RAND_MAX) * range;
+    }
+};
+
+
 
 int main(){
 
