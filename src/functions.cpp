@@ -7,31 +7,14 @@
 *
 */
 
-
-
 #include "functions.h"
+#include "LottoDraw.h"
 #include <iostream>
 #include <vector>
 #include <random>
 #include <algorithm>
 using namespace std;
 
-
-
-/**
- * @brief 
- * Unnecessary function that checks if the Array containts exactly 6 elements.
- * 
- * @param numbers 
- * @return true 
- * @return false 
- */
-bool check_length(vector<int> numbers){
-    if (numbers.size() ==  6){
-        return true;
-    }
-    else return false;
-}
 /**
  * @brief 
  * Simple print function for console
@@ -43,22 +26,6 @@ void print_numbers(vector<int> numbers){
     }
     cout << '\n';
 }
-/**
- * @brief 
- * Generates random numbers and fills them into given array.
- * @param numbers 
- */
-void fill_random_numbers(vector<int> &numbers){
-    std::random_device rdev;
-    std::mt19937 rgen(rdev());
-    std::uniform_int_distribution<int> idist(1,49); 
-
-    for (int i = 0; i < numbers.size(); i++){
-        do {
-            numbers[i] = idist(rgen);
-        } while(find(numbers.begin(), numbers.begin() +i, numbers[i]) != (numbers.begin()+i));
-    }
-}
 
 /**
  * @brief 
@@ -67,11 +34,13 @@ void fill_random_numbers(vector<int> &numbers){
  * @param tip 
  * @param numbers 
  */
-void draw_numbers (vector<int> tip, vector<int> &numbers){
+void draw_numbers (vector<int> tip,  LottoDraw *lottoDraw){
     int count = 0;
     int jackpot = 0;
+    std::vector<int> numbers;
     while(jackpot < tip.size()){
-        fill_random_numbers(numbers);
+        lottoDraw->newDraw();
+        numbers = lottoDraw->getLottoNumbers();
         count++;
         for (int i = 0; i < numbers.size(); i++){
             if (find(numbers.begin(), numbers.end(), tip[i]) != (numbers.end())){
@@ -88,21 +57,13 @@ void draw_numbers (vector<int> tip, vector<int> &numbers){
     cout << count << '\n';
 }
 
-
-
-
-
+/*
+ *  Main
+ */
 int main(){
-    /**
-     * @brief 
-     * little Test
-     * 
-     */
+    std::vector<int> test {10,17,18,25,38,40};
+    LottoDraw *lottoDraw = new LottoDraw();
 
-    std::vector<int> test {1,2,3,4,5,6};
-    std::vector<int> drawn_numbers {0,0,0,0,0,0};
-    draw_numbers(test,drawn_numbers);
-
-
+    draw_numbers(test, lottoDraw);
     return 0;
 }

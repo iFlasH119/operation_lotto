@@ -7,7 +7,7 @@ LottoDraw::LottoDraw() {
 
     rGenerator = std::mt19937(rDevice());
     lottoNumbersDist = std::uniform_int_distribution<int> (1,49);
-    superNumberDist = std::uniform_int_distribution<int> (1,9);
+    superNumberDist = std::uniform_int_distribution<int> (0,9);
 }
 
 void LottoDraw::newDraw() {
@@ -22,6 +22,7 @@ void LottoDraw::generateLottoNumbers() {
         } while(find(lottoNumbers.begin(), lottoNumbers.begin() +i, lottoNumbers[i]) != (lottoNumbers.begin()+i));
     }
 }
+
 void LottoDraw::generateSuperNumber() {
     superNumber = superNumberDist(rGenerator);
 }
